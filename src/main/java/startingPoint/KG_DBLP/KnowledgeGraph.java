@@ -103,10 +103,21 @@ public class KnowledgeGraph extends WebMvcConfigurerAdapter {
     	return json;
     }
     
-    @RequestMapping("/getPapers")
-    public Collection<Paper> getPapers(String title) {
-    	return paperRepository.findByTitleContaining(title);
-    	//return paperRepository.findByTitleLike(title);
+    @RequestMapping("/findByTitleContaining")
+    public String findByTitleContaining(@RequestParam(value = "title",required = false) String title) {
+    	System.out.println("findByTitleContaining");
+    	title = title.replace('+', ' ');
+    	System.out.println("Title:     " + title);
+    	Map<String, Object> map = paperService.findByTitleContaining(title == null ? "" : title);
+    	String json = "";
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+    		//convert map to JSON string
+    		json = mapper.writeValueAsString(map);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return json;
     }
     
     @RequestMapping("/getPaper")
