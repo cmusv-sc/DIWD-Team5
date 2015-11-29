@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import Controller.UserController;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
@@ -103,6 +105,63 @@ public class KnowledgeGraph extends WebMvcConfigurerAdapter {
     	return json;
     }
     
+    @RequestMapping("/getMultiDepthCoAuthor")
+    public String getMultiDepthCoAuthor(@RequestParam(value = "name",required = false) String name) {
+    	System.out.println("getMultiDepthCoAuthor");
+    	name = name.replace('+', ' ');
+    	System.out.println("Name: " + name);
+    	Map<String, Object> map = paperService.getMultiDepthCoAuthor(name == null ? "" : name);
+    	String json = "";
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+    		//convert map to JSON string
+    		json = mapper.writeValueAsString(map);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return json;
+    }
+    
+    @RequestMapping("/getPaperByAuthorAndTimeline")
+    public String getPaperByAuthorAndTimeline(@RequestParam(value = "name",required = false) String name,
+    		@RequestParam(value = "begYear",required = false) Integer begYear
+    		,@RequestParam(value = "endYear",required = false) Integer endYear) {
+    	System.out.println("getMultiDepthCoAuthor");
+    	name = name.replace('+', ' ');
+    	System.out.println("Name: " + name);
+    	System.out.println("begYear: " + begYear);
+    	System.out.println("endYear: " + endYear);
+    	Map<String, Object> map = paperService.getPaperByAuthorAndTimeline(name, begYear, endYear);
+    	String json = "";
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+    		//convert map to JSON string
+    		json = mapper.writeValueAsString(map);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return json;
+    }
+    
+    @RequestMapping("/getPaperByTimeline")
+    public String getPaperByTimeline(
+    		@RequestParam(value = "begYear",required = false) Integer begYear
+    		,@RequestParam(value = "endYear",required = false) Integer endYear) {
+    	System.out.println("getPaperByTimeline");
+    	System.out.println("begYear: " + begYear);
+    	System.out.println("endYear: " + endYear);
+    	Map<String, Object> map = paperService.getPaperByTimeline(begYear, endYear);
+    	String json = "";
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+    		//convert map to JSON string
+    		json = mapper.writeValueAsString(map);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return json;
+    }
+    
     @RequestMapping("/findByTitleContaining")
     public String findByTitleContaining(@RequestParam(value = "title",required = false) String title) {
     	System.out.println("findByTitleContaining");
@@ -120,10 +179,26 @@ public class KnowledgeGraph extends WebMvcConfigurerAdapter {
     	return json;
     }
     
-    @RequestMapping("/getPaper")
-    public Paper getPaper(String title) {
-    	//return movieRepository.findByTitleContaining(title);
-    	return paperRepository.findByTitle(title);
+    @RequestMapping("/signUp")
+    public String signUp(@RequestParam(value = "userName",required = false) String userName
+    					,@RequestParam(value = "password",required = false) String password) {
+    	System.out.println("signUp");
+    	UserController userController = new UserController();
+    	userController.signUp(userName, password);
+    	String json = "";
+    	
+    	return json;
     }
+    @RequestMapping("/logIn")
+    public String logIn(@RequestParam(value = "userName",required = false) String userName
+    					,@RequestParam(value = "password",required = false) String password) {
+    	System.out.println("logIn");
+    	UserController userController = new UserController();
+    	boolean res = userController.logIn(userName, password);
+    	String json = res ? "1" : "0";
+    	
+    	return json;
+    }
+    
 
 }

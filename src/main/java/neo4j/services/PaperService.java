@@ -24,7 +24,7 @@ public class PaperService {
     }
     
     public Map<String, Object> getPaperByAuthor(String s) {
-    	System.out.println("Service: " + s);
+    	System.out.println("getPaperByAuthor: " + s);
         Iterator<Map<String, Object>> result = paperRepository.getPaperByAuthor(s).iterator();
         return FormatConverter.toAlcFormat(result);
     }
@@ -33,6 +33,30 @@ public class PaperService {
         Iterator<Map<String, Object>> result = paperRepository.getCoAuthor(s).iterator();
         return FormatConverter.toAlcFormat1(result);
     }
+    public Map<String, Object> getMultiDepthCoAuthor(String s) {
+    	System.out.println("getMultiDepthCoAuthor:     " + s);
+        List<Map<String, Object>> result = paperRepository.getCoAuthor(s);
+        Map<String, Object> row = result.get(0);
+        for(Object name : (Collection)row.get("cast")){
+        	System.out.println("Current author :      " + name);
+        	result.addAll(paperRepository.getCoAuthor((String)name));
+        }
+        
+        return FormatConverter.toAlcFormat1(result.iterator());
+    }
+    
+    public Map<String, Object> getPaperByAuthorAndTimeline(String s, Integer begYear, Integer endYear) {
+    	System.out.println("getPaperByAuthorAndTimeline:     " + s);
+        Iterator<Map<String, Object>> result = paperRepository.getPaperByAuthorAndTimeline(s, begYear, endYear).iterator();
+        return FormatConverter.toAlcFormat(result);
+    }
+    
+    public Map<String, Object> getPaperByTimeline(Integer begYear, Integer endYear) {
+    	System.out.println("getPaperByTimeline:     " + begYear + " to " + endYear);
+        Iterator<Map<String, Object>> result = paperRepository.getPaperByTimeline(begYear, endYear).iterator();
+        return FormatConverter.toAlcFormat(result);
+    }
+    
     public Map<String, Object> findByTitleContaining(String s) {
     	System.out.println("findByTitleContaining:    " + s);
         Iterator<Map<String, Object>> result = paperRepository.findByTitleContaining(s).iterator();

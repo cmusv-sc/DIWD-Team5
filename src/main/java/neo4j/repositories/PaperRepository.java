@@ -24,9 +24,18 @@ public interface PaperRepository extends GraphRepository<Paper> {
     @Query("MATCH (p:Paper)<-[:PUBLISH]-(a:Author) WHERE a.name = {name} RETURN p.title as paper, collect(a.name) as cast LIMIT 50")
     List<Map<String, Object>> getPaperByAuthor(@Param("name") String name);
     
-    @Query("MATCH (a1:Author)<-[:CO]-(a2:Author) WHERE a2.name = {name} RETURN a1.name as coauthor, collect(a2.name) as cast LIMIT 50")
+    @Query("MATCH (a1:Author)<-[:CO]-(a2:Author) WHERE a2.name = {name} RETURN a2.name as author, collect(a1.name) as cast LIMIT 50")
     List<Map<String, Object>> getCoAuthor(@Param("name") String name);
     
+    @Query("MATCH (p:Paper)<-[:PUBLISH]-(a:Author) WHERE a.name = {name} AND p.year > {begYear} AND p.year < {endYear} RETURN p.title as paper, collect(a.name) as cast LIMIT 50")
+    List<Map<String, Object>> getPaperByAuthorAndTimeline(@Param("name") String name, @Param("begYear") Integer begYear, @Param("endYear") Integer endYear);
+
+    @Query("MATCH (p:Paper)<-[:PUBLISH]-(a:Author) WHERE p.year > {begYear} AND p.year < {endYear} RETURN p.title as paper, collect(a.name) as cast LIMIT 50")
+    List<Map<String, Object>> getPaperByTimeline(@Param("begYear") Integer begYear, @Param("endYear") Integer endYear);
+    
+    
+    //    @Query("MATCH (a1:Author)<-[:CO]-(a2:Author)<-[:CO]-(a3:Author) WHERE a3.name = {name} RETURN a3.name as author, collect(a1.name) as cast LIMIT 50")
+//    List<Map<String, Object>> getMultiDepthCoAuthor(@Param("name") String name);
     
 }
 

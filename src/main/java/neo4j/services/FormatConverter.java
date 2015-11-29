@@ -46,6 +46,9 @@ public class FormatConverter {
 //               cluster ----> 1
 //               value ------> 2
 //               group -----> paper
+            System.out.println("------------------------");
+            System.out.println(row);
+            System.out.println("------------------------");
             target = i++;
             for (Object name : (Collection) row.get("cast")) {
                 Map<String, Object> author = MapMethod.map5("title", 
@@ -75,26 +78,24 @@ public class FormatConverter {
         List<Map<String,Object>> rels = new ArrayList<Map<String, Object>>();
         int i = 1;
         int target = 0;
+//        遍历当前条目
         while (result.hasNext()) {
             Map<String, Object> row = result.next();
-            nodes.add(MapMethod.map6("id", i, "name",row.get("coauthor"),"label", "coauthor", "cluster", "1", "value", 2, "group", "coauthor"));
+            System.out.println("------------------------");
+            System.out.println(row);
+            System.out.println("------------------------");
+            nodes.add(MapMethod.map6("id", i, "title",row.get("author"),"label", "author", "cluster", "1", "value", 2, "group", "author"));
             target = i++;
+//        遍历当前条目 下cast list 里面的
             for (Object name : (Collection) row.get("cast")) {
-                Map<String, Object> author = MapMethod.map5("name", 
-                		name,"label", "author", "cluster", "2", "value", 1, "group", "author");
-                int source = 0;
-                for (int j = 0; j < nodes.size(); j++) {
-                	if (nodes.get(j).get("name").equals(name)) {
-                		source = (int) nodes.get(j).get("id");
-                		break;
-                	} 
-                }
-                if (source == 0) {
-                	author.put("id", i);
-                    source = i;
-                    i++;
-                    nodes.add(author);
-                }
+                Map<String, Object> author = MapMethod.map5("title", 
+                		name,"label", "coauthor", "cluster", "2", "value", 1, "group", "coauthor");
+                
+                author.put("id", i);
+                int source = i;
+                i++;
+                nodes.add(author);
+                
 
                 rels.add(MapMethod.map3("from", source, "to", target, "name", "CO"));
             }
