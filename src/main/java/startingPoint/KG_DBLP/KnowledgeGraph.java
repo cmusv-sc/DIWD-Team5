@@ -184,8 +184,14 @@ public class KnowledgeGraph extends WebMvcConfigurerAdapter {
     					,@RequestParam(value = "password",required = false) String password) {
     	System.out.println("signUp");
     	UserController userController = new UserController();
-    	userController.signUp(userName, password);
+    	User user = new User(userName, password);
     	String json = "";
+    	if(userController.isUserValid(user)){
+    		userController.signUp(userName, password);
+    		json = "1";
+    	}else{
+    		json = "0";
+    	}
     	
     	return json;
     }

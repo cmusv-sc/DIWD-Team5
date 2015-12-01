@@ -31,4 +31,14 @@ public class UserController {
 		}
 		return res;
 	}
+	public boolean isUserValid(User user){
+		boolean res = true;
+		for(User cur : userList){
+			if(cur.getName().equals(user.getName())){
+				res = false;
+				break;
+			}
+		}
+		return res;
+	}
 }

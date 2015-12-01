@@ -14,3 +14,5 @@ MATCH (n) DETACH DELETE (n)
 MATCH (p:Paper)<-[:PUBLISH]-(a:Author) WHERE a.name = 'Maciej Koutny' RETURN p
 
 MATCH (a:Author) WHERE a.name = 'Juha Honkala' RETURN a
+
+awk 'NR>=0 && NR <=100000{print>"mydblp.xml" }' dblp.xml
