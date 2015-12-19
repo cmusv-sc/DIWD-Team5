@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="javascript/userMainPage.js"></script>
+<script type="text/javascript" src="javascript/jquery-2.1.4.js"></script>
+<script type="text/javascript">
+	function loadPage() {
+        var params = {};
+        params['email'] = ReadCookie("email");
+		$
+				.ajax({
+					url : "getAllUsers",
+					type : "GET",
+					contentType : "applcation/json",
+                    data: params
+				})
+				.done(
+						function(data) {
+							var data = JSON.parse(data);
+							//data format: [{"email":"bailiangg@andrew.cmu.edu", "f":"follow"}, {"email":"464632571@qq.com", "f":"unfollow"}]
+							var trHTML = '';
+							$
+									.each(
+											data,
+											function(i, item) {
+												trHTML += '<tr><td>'
+														+ "<input class=\"action\" type=\"checkbox\" name=\"vehicle\" value=" + "\"" + item.email + "\"" + "/>"
+														+ '</td><td>'
+														+ item.email
+														+ '</td><td>' + item.f
+														+ '</td></tr>';
+											});
+
+							$('#records_table').append(trHTML);
+							initial();
+							$('#records_table').css({
+								"position" : "absolute",
+								"top" : "250px",
+								"text-align" : "center",
+								"left" : "35%",
+								"border-style" : "solid",
+								"border-color" : "#1ab188",
+								"width" : "400px"
+							});
+							$('#records_table tr td').css({
+								"color" : "#ffffff",
+								"height" : "40px"
+							});
+							$('#records_table tr th').css({
+								"color" : "#ffffff",
+								"height" : "40px"
+							});
+
+						});
+
+		var params = {};
+		if (window.location.href.includes('?')) {
+			var param_array = window.location.href.split('?')[1].split('&');
+			for ( var i in param_array) {
+				x = param_array[i].split('=');
+				params[x[0]] = x[1].replace(/%40/, "@");
+			}
+			params['email'] = ReadCookie("email");
+			console.log(params);
+			var test = null;
+			$.ajax({
+				url : "follow",
+				type : "GET",
+				contentType : "applcation/json",
+				data : params
+			}).done(
+					function(data) {
+						alert("You have followed user(" + params['vehicle']
+								+ ") now!");
+					});
+		}
+
+	}
+</script>
+
+<style type="text/css">
+body {
+	background-image: url('img/header.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	/*background: radial-gradient(circle, black, white);*/
+}
+
+h1 {
+	font: bold 40px Chalkboard SE;
+	text-align: center;
+	color: #ffffff;
+	font-weight: 300;
+	margin: 0 0 40px;
+	top: 150px;
+	position: relative;
+}
+
+h2 {
+	font: bold 20px Chalkboard SE;
+	color: #ffffff;
+	font-weight: 700;
+	line-height: 1em;
+	margin: 0 0 1em 0;
+	text-transform: uppercase;
+	position: absolute;
+	top: 10px;
+	padding: 4px;
+	top: 20px;
+}
+
+#primary_nav_wrap {
+	margin-top: 15px;
+	position: absolute;
+	top: 15px;
+	right: 100px;
+	padding: 4px
+}
+
+#primary_nav_wrap ul {
+	list-style: none;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+#primary_nav_wrap ul a {
+	font: bold 20px Chalkboard SE;
+	display: block;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 700;
+	line-height: 1em;
+	padding: 4px
+}
+
+#primary_nav_wrap ul li {
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+#primary_nav_wrap ul ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #1ab188;
+	padding: 0
+}
+
+#primary_nav_wrap ul ul li {
+	float: none;
+	width: 130px
+}
+
+#primary_nav_wrap ul ul a {
+	line-height: 120%;
+	padding: 10px 15px
+}
+
+#primary_nav_wrap ul ul ul {
+	top: 0;
+	left: 100%
+}
+
+#primary_nav_wrap ul li:hover>ul {
+	display: block
+}
+</style>
+</head>
+<body onload="loadPage()">
+	<header id="header" class="alt">
+		<h2>
+			Made by<strong> TEAM 5</strong>
+		</h2>
+
+		<nav id="primary_nav_wrap">
+			<ul>
+				<li><a id="home" href="userMainPage.html">Home</a></li>
+				<li><a id="myProfile" href="index.html"></a>
+					<ul class="dropdown">
+						<li><a href="userQueryHistory.html">History</a></li>
+						<li><a href="userList.html">Users</a></li>
+						<li><a href="follower.html">Followers</a></li>
+						<li><a href="following.html">Follows</a></li>
+					</ul></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<h1>Users List</h1>
+	<form action="userList.html">
+		<table id="records_table" border='1'>
+			<tr>
+				<th>Follow</th>
+				<th>Email</th>
+				<th>Status</th>
+			</tr>
+		</table>
+		<input type="submit" value="Submit" />
+	</form>
+</body>
+</html>

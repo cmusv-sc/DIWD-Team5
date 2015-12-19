@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Q7_form</title>
+<script src="javascript/jquery-2.1.4.js" type="text/javascript"></script>
+<script src="javascript/userMainPage.js" type="text/javascript"></script>
+<style>
+body {
+	background-image: url('img/header.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	/*background: radial-gradient(circle, black, white);*/
+}
+
+h1 {
+	font: bold 40px Chalkboard SE;
+	text-align: center;
+	color: #ffffff;
+	font-weight: 300;
+	margin: 0 0 40px;
+	top: 200px;
+	position: relative;
+}
+
+h2 {
+	font: bold 20px Chalkboard SE;
+	color: #ffffff;
+	font-weight: 700;
+	line-height: 1em;
+	margin: 0 0 1em 0;
+	text-transform: uppercase;
+	position: absolute;
+	top: 10px;
+	padding: 4px;
+	top: 20px;
+}
+
+#primary_nav_wrap {
+	margin-top: 15px;
+	position: absolute;
+	top: 15px;
+	right: 100px;
+	padding: 4px
+}
+
+#primary_nav_wrap ul {
+	list-style: none;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+#primary_nav_wrap ul a {
+	font: bold 20px Chalkboard SE;
+	display: block;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 700;
+	line-height: 1em;
+	padding: 4px
+}
+
+#primary_nav_wrap ul li {
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+#primary_nav_wrap ul ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background: #1ab188;
+	padding: 0
+}
+
+#primary_nav_wrap ul ul li {
+	float: none;
+	width: 130px
+}
+
+#primary_nav_wrap ul ul a {
+	line-height: 120%;
+	padding: 10px 15px
+}
+
+#primary_nav_wrap ul ul ul {
+	top: 0;
+	left: 100%
+}
+
+#primary_nav_wrap ul li:hover>ul {
+	display: block
+}
+
+#textArea1 {
+	position: absolute;
+	top: 300px;
+	left: 27%;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #ccc;
+	width: 600px;
+	height: 30px;
+	border-radius: 3px;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+#textArea2 {
+	position: absolute;
+	top: 340px;
+	left: 27%;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #ccc;
+	width: 600px;
+	height: 30px;
+	border-radius: 3px;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+
+#submit {
+	position: absolute;
+	top: 297px;
+	left: 70%;
+	background: #1ab188;
+	padding: 10px 10px;
+}
+</style>
+
+</head>
+<body onload="initial()">
+
+	<header id="header" class="alt">
+		<h2>
+			Made by<strong> TEAM 5</strong>
+		</h2>
+
+		<nav id="primary_nav_wrap">
+			<ul>
+				<li><a id="home" href="userMainPage.html">Home</a></li>
+				<li><a id="myProfile" href="index.html"></a>
+					<ul class="dropdown">
+						<li><a href="userQueryHistory.html">History</a></li>
+						<li><a href="userList.html">Users</a></li>
+						<li><a href="follower.html">Followers</a></li>
+						<li><a href="following.html">Follows</a></li>
+					</ul></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<h1>Please Enter a keyword</h1>
+	<div id="d">
+		<form action="Q8.html" id="q8_form">
+			<input type="text" id="textArea1" name="title" value="information">
+			<br> <input id="submit" type="submit" value="Submit">
+		</form>
+	</div>
+
+
+
+
+</body>
+</html>
