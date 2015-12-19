@@ -9,3 +9,8 @@ Running instructions:
 3. Open the browser, and type “http://localhost:8080”
 4. Before signing up or logging in, users can not use this service. So sign up or log in first.
 5. After signing up or logging in, users can use the service. Move the mouse to the user email on top-right of the screen, the user can see his/her query history, check the list of all the users, follow a specific user or check the list of all the followers and all the users he/she follows. Also, users can choose either “GET QUERIES OF AUTHOR” or  “GET QUERIES OF PAPER”. And then follow the instructions to use a specific query.
+
+
+video link: https://drive.google.com/file/d/0B8ps44fkNLLeWkpxRkEya2dmdUU/view?usp=sharing
+
+All 32 features has been implemented. Implementation details are written in document All_Features_Implementation.pdf
